@@ -57,25 +57,16 @@ redis должен запускаться без пароля;
 удаления контейнера;
 проброса порта локальной машины в контейнер для отладки.
 В качестве решения пришлите получившиеся команды.
+
+
 ![5](https://user-images.githubusercontent.com/122460278/213149994-1ddb6b14-6de1-45f2-a6a6-1fde2d27a7f3.png)
 
+![4](https://user-images.githubusercontent.com/122460278/213150371-fad6243e-7405-4b88-8f94-4c199fbfa7dc.png)
 
+sudo kubectl exec -it redis-9f87ddf8b-t5qrn -- ps aux
 
+sudo kubectl logs --since=5m redis-9f87ddf8b-t5qrn
 
-Дополнительные задания* (со звёздочкой)
-Их выполнение необязательное и не влияет на получение зачёта по домашнему заданию. Можете их решить, если хотите лучше разобраться в материале.
+sudo kubectl delete -f redis.yaml && sudo kubectl delete -f redis_service.yaml
 
-Задание 4*
-Есть конфигурация nginx:
-
-location / {
-    add_header Content-Type text/plain;
-    return 200 'Hello from k8s';
-}
-Выполните действия:
-
-Напишите yaml-файлы для развёртки nginx, в которых будут присутствовать:
-ConfigMap с конфигом nginx;
-Deployment, который бы подключал этот configmap;
-Ingress, который будет направлять запросы по префиксу /test на наш сервис.
-В качестве решения пришлите получившийся файл.
+sudo kubectl port-forward pod/redis-9f87ddf8b-t5qrn 44444:6379
